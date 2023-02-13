@@ -1,0 +1,32 @@
+version: '4.14.1'
+
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - 8000:8000
+    volumes:
+      - ./shopy:/shopy
+    environment:
+      - SECRET_KEY=devsecretkey
+      - DEBUG=1
+    command: > 
+      sh -c "python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:13
+    restart:
+      always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
