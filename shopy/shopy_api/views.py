@@ -8,8 +8,7 @@ from django.http import Http404
 
 # Create your views here.
 class ProductViewSet(APIView):
-    # Remova o comentário abaixo para utilizar autenticação na api
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
@@ -35,7 +34,8 @@ class ProductViewSet(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ProductDetail(APIView):
-    
+    permission_classes = [permissions.IsAuthenticated]
+
     def get_object(self, pk):
         try:
             return Product.objects.get(pk=pk)
@@ -62,8 +62,7 @@ class ProductDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class OrderViewSet(APIView):
-    # Remova o comentário abaixo para utilizar autenticação na api
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     serializer_class = OrderSerializer
     queryset = Order.objects.all()
@@ -93,6 +92,7 @@ class OrderViewSet(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class OrderDetail(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_object(self, pk):
         try:
